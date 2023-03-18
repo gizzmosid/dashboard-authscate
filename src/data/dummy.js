@@ -504,7 +504,7 @@ export const links = [
     // title: 'Dashboard',
     links: [
       {
-        name: 'Claims',
+        name: 'View your NFT',
         icon: <GiHamburgerMenu />,
       },
     ],

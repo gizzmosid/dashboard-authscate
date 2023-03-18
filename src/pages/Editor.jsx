@@ -1,10 +1,28 @@
-import React from 'react';
-import { HtmlEditor, Image, Inject, Link, QuickToolbar, RichTextEditorComponent, Toolbar } from '@syncfusion/ej2-react-richtexteditor';
+import axios from './axios';
+import React, { useState } from 'react';
+
 
 import { Header } from '../components';
-import { EditorData } from '../data/dummy';
 
-const Editor = () => (
+
+function Editor  () {
+  const [title,setTitle]=useState("");
+  const [about,setAbout]=useState("");
+  const [symbol,setSymbol]=useState("");
+  const [price,setPrice]=useState("0");
+  const [photo,setPhoto]=useState("");
+const addnft=(e)=>{
+  e.preventDefault()
+  axios.post("/nfts",{title,about,symbol,price,photo}).then(()=>{
+    setTitle("");
+    setAbout("");
+    setSymbol("");
+    setPrice("0");
+    setPhoto("");
+  }).catch((error)=>alert(error.message));
+
+}
+  return(
   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
     <Header  title="Create your NFT" />
     
@@ -17,7 +35,7 @@ const Editor = () => (
       </div>
     </div>
     <div class="mt-5 md:col-span-2 md:mt-0">
-      <form action="#" method="POST">
+      <form  >
         <div class="shadow sm:overflow-hidden sm:rounded-md">
           <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
             <div class="grid grid-cols-3 gap-6">
@@ -25,7 +43,7 @@ const Editor = () => (
                 <label for="company-website" class="block text-sm font-medium leading-6 text-gray-900">Product Label</label>
                 <div class="mt-2 flex rounded-md shadow-sm">
                   
-                  <input type="text" name="company-website" id="company-website" class="block w-full flex-1 rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder= " &nbsp; Label name " m-3/>
+                  <input type="text" name="company-website" id="company-website" class="block w-full flex-1 rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder= " &nbsp; Label name " m-3 onChange={(e)=>setTitle(e.target.value)} value={title}/>
                 </div>
               </div>
             </div>
@@ -33,7 +51,7 @@ const Editor = () => (
             <div>
               <label for="about" class="block text-sm font-medium leading-6 text-gray-900">About the Product</label>
               <div class="mt-2">
-                <textarea id="about" name="about" rows="3" class="mt-1 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6" placeholder=" &nbsp; some lines about the product"></textarea>
+                <textarea id="about" name="about" rows="3" class="mt-1 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6" placeholder=" &nbsp; some lines about the product" onChange={(e)=>setAbout(e.target.value)} value={about}></textarea>
               </div>
               <p class="mt-2 text-sm text-gray-500">Brief description for your product. URLs are hyperlinked.</p>
             </div>
@@ -42,11 +60,11 @@ const Editor = () => (
             <label for="company-website" class="block text-sm font-medium leading-6 text-gray-900">Price</label>
             <div class="mt-2 flex rounded-md shadow-sm ">
             
-                  <span class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 px-3 text-gray-500 sm:text-sm"> <select id="country" name="country" autocomplete="country-name" class="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" >
+                  <span class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 px-3 text-gray-500 sm:text-sm"> <select id="country" name="country" autocomplete="country-name" class="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" onChange={(e)=>setSymbol(e.target.value)} value={symbol}>
                   <option>$</option>
                   <option>₹</option>
                   <option>€</option></select></span>
-                  <input type="text" name="company-website" id="company-website" class="block w-full flex-1 rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder=" &nbsp; amount in numbers"/>
+                  <input type="text" name="company-website" id="company-website" class="block w-full flex-1 rounded-none rounded-r-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder=" &nbsp; amount in numbers"onChange={(e)=>setPrice(e.target.value)} value={price}/>
                 </div>
               
 
@@ -77,7 +95,7 @@ const Editor = () => (
                   <div class="flex text-sm text-gray-600">
                     <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500">
                       <span>Upload a file</span>
-                      <input id="file-upload" name="file-upload" type="file" class="sr-only"/>
+                      <input id="file-upload" name="file-upload" type="file" class="sr-only" onChange={(e)=>setPhoto(e.target.value)} value={photo}/>
                     </label>
                     <p class="pl-1">or drag and drop</p>
                   </div>
@@ -87,7 +105,8 @@ const Editor = () => (
             </div>
           </div>
           <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-            <button type="submit" class="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Save</button>
+            <button onClick={addnft}
+             class="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Create your NFT</button>
           </div>
         </div>
       </form>
@@ -150,5 +169,6 @@ const Editor = () => (
 
 
   </div>
-);
+  );
+}
 export default Editor;
