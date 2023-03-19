@@ -44,7 +44,25 @@ app.post('/nfts', async(req,res)=>{
           res.status(201).send(data);
         }
       });
-    
+  
+      
+
+
+      app.get('/nfts',(req,res)=>{
+
+        NFT.find((err,data)=>{
+        if(err){
+          res.status(500).send(err.message);
+          console.log(err);
+
+        }else{
+          res.status(201).send(data);
+        }
+      });
+      
+      });
+      
+
 })
 
   

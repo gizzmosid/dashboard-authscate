@@ -1,5 +1,10 @@
 import axios from './axios';
 import React, { useState } from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import RemoveIcon from '@material-ui/icons/Remove';
+import AddIcon from '@material-ui/icons/Add';
+import Icon from '@material-ui/core/Icon';
+import { v4 as uuidv4 } from 'uuid';
 
 
 import { Header } from '../components';
@@ -11,6 +16,37 @@ function Editor  () {
   const [symbol,setSymbol]=useState("");
   const [price,setPrice]=useState("0");
   const [photo,setPhoto]=useState("");
+  const [formFields, setFormFields] = useState([
+    { labelname: '', labelvalue: '' },
+  ])
+
+  
+  const handleFormChange = (event, index) => {
+    let data = [...formFields];
+    data[index][event.target.name] = event.target.value;
+    setFormFields(data);
+  }
+
+  const submit = (e) => {
+    e.preventDefault();
+    console.log(formFields)
+  }
+
+  const addFields = () => {
+    let object = {
+      labelname: '',
+      labelvalue: ''
+    }
+
+    setFormFields([...formFields, object])
+  }
+
+  const removeFields = (index) => {
+    let data = [...formFields];
+    data.splice(index, 1)
+    setFormFields(data)
+  }
+
 const addnft=(e)=>{
   e.preventDefault()
   axios.post("/nfts",{title,about,symbol,price,photo}).then(()=>{
@@ -21,7 +57,11 @@ const addnft=(e)=>{
     setPhoto("");
   }).catch((error)=>alert(error.message));
 
+
+
+
 }
+  
   return(
   <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
     <Header  title="Create your NFT" />
@@ -129,38 +169,48 @@ const addnft=(e)=>{
       </div>
     </div>
     <div class="mt-5 md:col-span-2 md:mt-0">
-      <form action="#" method="POST">
+    
+      <form >
+      {formFields.map((form, index) => {
+     <div key={index}>
         <div class="overflow-hidden shadow sm:rounded-md">
           <div class="bg-white px-4 py-5 sm:p-6">
             <div class="grid grid-cols-6 gap-6">
               <div class="col-span-6 sm:col-span-3">
-                <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Label Id</label>
-                <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+                <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Label Name</label>
+                <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" onChange={event => handleFormChange(event, index)}
+                value={form.labelname}/>
               </div>
 
               <div class="col-span-6 sm:col-span-3">
-                <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Unique Product id</label>
-                <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+                <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Label Value</label>
+                <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" onChange={event => handleFormChange(event, index)}
+                value={form.labelvalue}/>
+
+
+<button  onClick={() => removeFields(index)} class="inline-flex justify-center rounded-md bg-red-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Remove</button>
+          
               </div>
 
             
-
-              <a href="#" class="text-sm font-semibold leading-6 text-gray-900">add more <span aria-hidden="true">→</span></a>
-
-
+              
              
 
             </div>
           </div>
-          <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+         
+        </div>
+        </div>
+      })}
+      </form>
+      <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
             <button type="submit" class="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Save</button>
           </div>
-        </div>
-      </form>
+      
     </div>
   </div>
 </div>
-
+      
 <div class="hidden sm:block" aria-hidden="true">
   <div class="py-5">
     <div class="border-t border-gray-200"></div>
@@ -169,6 +219,7 @@ const addnft=(e)=>{
 
 
   </div>
+  
   );
 }
 export default Editor;

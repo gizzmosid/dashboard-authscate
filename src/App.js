@@ -71,7 +71,7 @@ const App = ()  => {
                 {/* pages  */}
                 <Route path="/Your NFT list" element={<Orders />} />
                 <Route path="/employees" element={<Employees />} />
-                <Route path="/customers" element={<Customers />} />
+                <Route path="/View your NFT" element={<Customers />} />
 
                 {/* apps  */}
                 <Route path="/kanban" element={<Kanban />} />
