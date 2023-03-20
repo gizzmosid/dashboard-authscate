@@ -66,7 +66,7 @@ const App = ()  => {
               <Routes>
                 {/* dashboard  */}
                 <Route path="/" element={(<Ecommerce />)} />
-                <Route path="/Seller Dashboard" element={(<Ecommerce />)} />
+                <Route path="/NFT Dashboard" element={(<Ecommerce />)} />
 
                 {/* pages  */}
                 <Route path="/Your NFT list" element={<Orders />} />
@@ -74,20 +74,11 @@ const App = ()  => {
                 <Route path="/View your NFT" element={<Customers />} />
 
                 {/* apps  */}
-                <Route path="/kanban" element={<Kanban />} />
+             
                 <Route path="/Create your NFT" element={<Editor />} />
-                <Route path="/calendar" element={<Calendar />} />
-                <Route path="/color-picker" element={<ColorPicker />} />
+               
 
-                {/* charts  */}
-                <Route path="/line" element={<Line />} />
-                <Route path="/area" element={<Area />} />
-                <Route path="/bar" element={<Bar />} />
-                <Route path="/pie" element={<Pie />} />
-                <Route path="/financial" element={<Financial />} />
-                <Route path="/color-mapping" element={<ColorMapping />} />
-                <Route path="/pyramid" element={<Pyramid />} />
-                <Route path="/stacked" element={<Stacked />} />
+                
 
               </Routes>
             </div>
