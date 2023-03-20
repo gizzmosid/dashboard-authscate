@@ -477,7 +477,7 @@ export const links = [
     // title: 'Dashboard',
     links: [
       {
-        name: 'Seller Dashboard',
+        name: 'NFT Dashboard',
         icon: <FaClipboard />,
       },
     ],
